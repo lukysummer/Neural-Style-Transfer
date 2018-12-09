@@ -44,8 +44,8 @@ def load_image(img_path, max_size = 400, shape = None):
 
 
 # match style image's size same as content image
-content_image = load_image('images/moon.png').to(device)
-style_image = load_image('images/iblard_jikan.jpg', shape = content_image.shape[-2:]).to(device)
+content_image = load_image('images/washed_out.jpg').to(device)
+style_image = load_image('images/moasic.jpg', shape = content_image.shape[-2:]).to(device)
 
 
 
@@ -126,13 +126,13 @@ target_image = content_image.clone().requires_grad_(True).to(device)
 # How important each layer when calculating Style Loss
 # weighting earlier layers more will result in LARGER STYLE artifacts
 style_loss_weights = {'conv1_1': 1., 
-                      'conv2_1': 0.75,
+                      'conv2_1': 0.4,
                       'conv3_1': 0.2, 
-                      'conv4_1': 0.2, 
-                      'conv5_1': 0.2}
+                      'conv4_1': 0.1, 
+                      'conv5_1': 0.05}
 
 content_alpha = 1
-style_beta = 1e6
+style_beta = 1e4
 
 
 
@@ -141,8 +141,8 @@ style_beta = 1e6
 ############################################################################### 
 criterion = nn.MSELoss()
 optimizer = optim.Adam([target_image], lr = 0.003)
-print_every = 400
-n_epochs = 2000
+print_every = 500
+n_epochs = 3000
 
 
 for epoch in range(n_epochs):
@@ -153,27 +153,31 @@ for epoch in range(n_epochs):
     style_loss = 0
     for layer in style_loss_weights:                                          
         #style_loss += style_weights[layer] * criterion(gram_matrix(target_features[layer]), gram_matrix(style_features[layer]))
-        style_loss += style_loss_weights[layer] * criterion(gram_matrix(target_features[layer]), style_gram_matrices[layer])
+        style_loss_this_layer = style_loss_weights[layer] * criterion(gram_matrix(target_features[layer]), style_gram_matrices[layer])
         _, d, h, w = target_features[layer].size()
-        style_loss = style_loss / (d*h*w)
-    
+        style_loss += style_loss_this_layer / (d*h*w)
+   
     total_loss = content_alpha * content_loss + style_beta * style_loss
     
     optimizer.zero_grad()
     total_loss.backward()     # Target image gets updated here
     optimizer.step()
     
+    
     if ((epoch+1) % print_every == 0) or (epoch==0):
         print('Epoch: {}\t'.format(epoch+1), 'Total Loss: {:.4f}'.format(total_loss.item()))
         plt.imshow(im_convert(target_image))
         plt.show()
-
+    
        
         
 ###############################################################################
 ################## 9. VISUALIZE ORIGINAL & FINAL TARGET IMAGE #################
 ###############################################################################         
+
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (20, 10))
 ax1.imshow(im_convert(content_image))
 ax2.imshow(im_convert(target_image))
+
+plt.imsave('final.jpg', im_convert(target_image))
         
