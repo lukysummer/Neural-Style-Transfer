@@ -2,6 +2,7 @@
 
 This is my own implementation of Neural Style Transfer using PyTorch, introduced in [this paper](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf).
 The main task was to generate an image that takes colours & stroke style of one image and copies the high-level contents (shapes) of the 2nd image.
+Instead of building a deep convolutional neural network from scratch, I used **VGG19** for transfer learning. 
 
 ## Repository 
 
