@@ -8,8 +8,6 @@ Instead of building a deep convolutional neural network from scratch, I used **V
 
 This repository contains:
 * **style_transfer.py** : Complete code for ALL steps of CycleGAN Implementation
-* **style_transfer.ipynb** : Jupyter notebook explaining step-by-step procedures for implementing CycleGAN 
-                      (based off [this source](https://github.com/udacity/deep-learning-v2-pytorch/tree/master/style_transfer), but with modified parameters for better performace of the model.)
 					  
 ## Results
 
