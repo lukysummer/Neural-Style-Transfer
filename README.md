@@ -29,6 +29,8 @@ There are only 2 image inputs in this program: **Content Image** & **Style Image
 * Learning Rate = **0.003**
 * Number of Epochs = **2000**
 
+## Sources
 
+I referenced the following sources for building & debugging the final model :
 
-
+* https://github.com/udacity/deep-learning-v2-pytorch
