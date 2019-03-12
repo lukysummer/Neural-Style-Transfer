@@ -7,7 +7,7 @@ Instead of building a deep convolutional neural network from scratch, I used **V
 ## Repository 
 
 This repository contains:
-* **style_transfer.py** : Complete code for ALL steps of CycleGAN Implementation
+* **style_transfer.py** : Complete code for ALL steps of Neural Style Transfer
 					  
 ## Results
 
